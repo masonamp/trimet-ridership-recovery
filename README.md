@@ -2,6 +2,8 @@
 
 How has TriMet ridership recovered since 2019, and how does recovery differ by mode?
 
+This analysis covers TriMet's fixed-route bus and MAX light rail, which together make up nearly all of its ridership.
+
 **Status:** In progress. Data acquired and validated; cleaning and analysis next.
 
 ## Questions
@@ -20,16 +22,14 @@ How has TriMet ridership recovered since 2019, and how does recovery differ by m
 - **Agency:** Tri-County Metropolitan Transportation District of Oregon (TriMet)
 - **Measures:** UPT (unlinked passenger trips) and VRH (vehicle revenue hours)
 
-**Modes in the analysis window:**
+**Modes analyzed:**
 
 | Mode | Type of service | Description |
 |---|---|---|
 | MB | DO | Fixed-route bus |
 | LR | DO | MAX light rail |
-| DR | PT, TX, TN | Demand response (paratransit): contracted service, taxi, and rideshare |
-| YR | PT | WES, reported as hybrid rail |
 
-Note that two other rows exist in the files (CR, SR) but have no data after 2012 and are excluded.
+TriMet's other reported services are excluded: demand-response (paratransit) and WES commuter rail (reported as hybrid rail) are small, structurally different services, and two older rows (CR, SR) have no data after 2012. Results describe bus and MAX, not all TriMet service.
 
 ## Metrics
 
@@ -47,10 +47,10 @@ I compared the FTA adjusted file against the raw file, because the adjusted file
 
 ## Limitations
 
-- UPT may be based on sampling rather than a full count, and FTA does not know which method each agency uses. Vehicle revenue hours and miles must be 100% counts.
+- UPT may be based on sampling rather than a full count, and FTA does not know which method each agency uses. Vehicle revenue hours must be 100% counts.
 - Agencies can revise past figures, so results reflect the files on the date downloaded.
 - UPT counts boardings, not people or complete journeys.
-- Paratransit service is reported by three types of service (contracted, taxi, rideshare) that change over time, so mode-level paratransit figures are summed across all three.
+- The analysis covers fixed-route bus and MAX light rail only. Paratransit and WES are excluded, so figures do not represent all TriMet service.
 
 ## How to reproduce
 
