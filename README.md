@@ -22,7 +22,7 @@ This analysis covers TriMet's fixed-route bus and MAX light rail, which together
 - **Agency:** Tri-County Metropolitan Transportation District of Oregon (TriMet)
 - **Measures:** UPT (unlinked passenger trips) and VRH (vehicle revenue hours)
 
-**Modes analyzed:**
+### Modes analyzed
 
 | Mode | Type of service | Description |
 |---|---|---|
@@ -38,33 +38,40 @@ One row per mode, type of service, and month (506 rows, January 2019 to Septembe
 | Column | Description |
 |---|---|
 | `month` | First day of the month |
-| `mode`, `tos` | NTD mode and type of service (e.g. MB/DO) |
+| `mode` | NTD mode code (e.g. MB for bus, LR for MAX light rail) |
+| `tos` | NTD type of service code (e.g. DO) |
 | `mode_name` | Readable mode name |
 | `upt` | Unlinked passenger trips |
 | `vrh` | Vehicle revenue hours |
 
 ### [`recovery_monthly.csv`](data/processed/recovery_monthly.csv)
 
-One row per mode (bus or MAX) per month, Jan 2019 to Sep 2026 (186 rows). Recovery values are raw ratios (1.0 = same as 2019). Rolling columns are empty before Dec 2019.
+One row per mode and month (186 rows, January 2019 to September 2026), for bus and MAX only. Recovery values are stored as ratios (1.0 = same as 2019), not percentages. Rolling columns are empty before December 2019.
 
-| Column | Meaning |
+| Column | Description |
 |---|---|
-| `mode`, `mode_name` | MB (Bus) or LR (MAX light rail) |
+| `mode` | NTD mode code (e.g. MB for bus, LR for MAX light rail) |
+| `mode_name` | Readable mode name |
 | `month` | First day of the month |
-| `upt`, `vrh` | Unlinked passenger trips and vehicle revenue hours |
-| `upt_recovery_monthly`, `vrh_recovery_monthly` | Share of the same month in 2019 |
-| `upt_rolling`, `vrh_rolling` | 12-month totals ending in this month |
-| `upt_recovery_rolling`, `vrh_recovery_rolling` | 12-month totals as a share of the 2019 totals |
-| `upt_per_vrh_monthly`, `upt_per_vrh_rolling` | Trips per revenue hour |
+| `upt` | Unlinked passenger trips |
+| `vrh` | Vehicle revenue hours |
+| `upt_recovery_monthly` | UPT as a share of the same month in 2019 |
+| `vrh_recovery_monthly` | VRH as a share of the same month in 2019 |
+| `upt_rolling` | UPT total for the 12 months ending in this month |
+| `vrh_rolling` | VRH total for the 12 months ending in this month |
+| `upt_recovery_rolling` | Rolling UPT total as a share of the 2019 calendar-year total |
+| `vrh_recovery_rolling` | Rolling VRH total as a share of the 2019 calendar-year total |
+| `upt_per_vrh_monthly` | Trips per revenue hour (UPT divided by VRH) for the month |
+| `upt_per_vrh_rolling` | Trips per revenue hour over the 12 months ending in this month |
 
 ## Metrics
 
 | Metric | Definition |
 |---|---|
 | UPT | Unlinked passenger trips. Every boarding counts as one trip, so a transfer counts as two. |
-| VRH | Vehicle revenue hours: hours vehicles are in service and available to the public. |
+| VRH | Vehicle revenue hours. hours vehicles are in service and available to the public. |
 | Monthly recovery | A month's UPT (or VRH) divided by UPT (or VRH) for the same month in 2019. Stored as a ratio (1.0 = same as 2019). |
-| Rolling 12-month recovery | UPT (or VRH) summed over the 12 months ending in a month, divided by the 2019 calendar-year total. This removes seasonality. First available for Dec 2019. |
+| Rolling 12-month recovery | UPT (or VRH) summed over the 12 months ending in a month, divided by the 2019 calendar-year total. This removes seasonality. First available for December 2019. |
 | Trips per revenue hour | Total UPT divided by total VRH (sums first, then the ratio). The rolling version uses the 12-month sums. |
 
 **Baselines:** monthly recovery compares each month with the same calendar month in 2019, which accounts for seasonality. Rolling recovery compares 12-month totals with calendar-year 2019.
