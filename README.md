@@ -29,11 +29,11 @@ This analysis covers TriMet's fixed-route bus and MAX light rail, which together
 | MB | DO | Fixed-route bus |
 | LR | DO | MAX light rail |
 
-TriMet's other reported services are excluded: demand-response (paratransit) and WES commuter rail (reported as hybrid rail) are small, structurally different services, and two older rows (CR, SR) have no data after 2012. Results describe bus and MAX, not all TriMet service.
+TriMet's other reported services are excluded: paratransit and WES commuter rail are small, differently structured services. There are also two older rows (CR and SR) that have no data after 2012. Results describe bus and MAX light rail only.
 
 ### [`trimet_monthly.csv`](data/processed/trimet_monthly.csv)
 
-One row per mode, type of service, and month (506 rows, January 2019 to September 2026), with UPT and VRH side by side. It includes all active TriMet services. Bus and MAX were 98.7% of UPT in 2019 and 98.5% over October 2025 to September 2026. The analysis itself filters to bus and MAX.
+One row per mode, type of service, and month (506 rows, January 2019 to September 2026). UPT and VRH side by side. It includes all active TriMet services. Bus and MAX were 98.7% of UPT in 2019 and 98.5% over October 2025 to September 2026; the later analysis will filter to bus and MAX.
 
 | Column | Description |
 |---|---|
@@ -46,7 +46,7 @@ One row per mode, type of service, and month (506 rows, January 2019 to Septembe
 
 ### [`recovery_monthly.csv`](data/processed/recovery_monthly.csv)
 
-One row per mode and month (186 rows, January 2019 to September 2026), for bus and MAX only. Recovery values are stored as ratios (1.0 = same as 2019), not percentages. Rolling columns are empty before December 2019.
+One row per mode and month (186 rows, January 2019 to September 2026), for bus and MAX only. Recovery values are stored as ratios, not percentages. Rolling columns are empty before December 2019.
 
 | Column | Description |
 |---|---|
@@ -68,28 +68,28 @@ One row per mode and month (186 rows, January 2019 to September 2026), for bus a
 
 | Metric | Definition |
 |---|---|
-| UPT | Unlinked passenger trips. Every boarding counts as one trip, so a transfer counts as two. |
-| VRH | Vehicle revenue hours. hours vehicles are in service and available to the public. |
-| Monthly recovery | A month's UPT (or VRH) divided by UPT (or VRH) for the same month in 2019. Stored as a ratio (1.0 = same as 2019). |
-| Rolling 12-month recovery | UPT (or VRH) summed over the 12 months ending in a month, divided by the 2019 calendar-year total. This removes seasonality. First available for December 2019. |
-| Trips per revenue hour | Total UPT divided by total VRH (sums first, then the ratio). The rolling version uses the 12-month sums. |
+| UPT | Unlinked passenger trips |
+| VRH | Vehicle revenue hours |
+| Monthly recovery | A month's UPT or VRH divided by UPT or VRH for the same month in 2019 (stored as a ratio not percentage) |
+| Rolling 12-month recovery | UPT or VRH summed over the 12 months ending in a month, divided by the 2019 calendar-year total to remove seasonality (first available for December 2019) |
+| Trips per revenue hour | Total UPT divided by total VRH |
 
-**Baselines:** monthly recovery compares each month with the same calendar month in 2019, which accounts for seasonality. Rolling recovery compares 12-month totals with calendar-year 2019.
+**Baselines:** monthly recovery compares each month with the same calendar month in 2019 to account for seasonality. Rolling recovery compares 12-month totals with calendar-year 2019.
 
 ## Data validation
 
-I compared the FTA adjusted file against the raw file, because the adjusted file fills in missing recent values with growth-rate estimates. For UPT and VRH, January 2019 to September 2026, no TriMet values are estimates and none differ between the two files. See [`notebooks/01_estimates_check.ipynb`](notebooks/01_estimates_check.ipynb).
+[`notebooks/01_estimates_check.ipynb`](notebooks/01_estimates_check.ipynb) compares the FTA adjusted file against the raw file to ensure no values are estimates (the FTA file notes that some recent months can be growth rate estimates). For UPT and VRH, January 2019 to September 2026, no TriMet values are estimates and none differ between the two files.
 
-[`notebooks/02_clean_trimet.ipynb`](notebooks/02_clean_trimet.ipynb) adds checks on the cleaned data: no duplicate keys, no negative values, UPT and VRH present together, and complete months for bus and MAX.
+[`notebooks/02_clean_trimet.ipynb`](notebooks/02_clean_trimet.ipynb) checks the cleaned data: no duplicate keys, no negative values, UPT and VRH present together, and complete months for bus and MAX.
 
 [`notebooks/03_sql_analysis.ipynb`](notebooks/03_sql_analysis.ipynb) checks each query's output (row counts, nulls, 2019 recovery equal to 1.0, values hand-checked against the source file) and recomputes the rolling 12-month values independently in pandas.
 
 ## Limitations
 
-- UPT may be based on sampling rather than a full count, and FTA does not know which method each agency uses. Vehicle revenue hours must be 100% counts.
+- UPT may be based on sampling rather than a full count, but vehicle revenue hours are guaranteed to be 100% counts.
 - Agencies can revise past figures, so results reflect the files on the date downloaded.
-- UPT counts boardings, not people or complete journeys.
-- The analysis covers fixed-route bus and MAX light rail only. Paratransit and WES are excluded, so figures do not represent all TriMet service.
+- UPT counts total boardings, not necessarily people/complete journeys.
+- The analysis covers fixed-route bus and MAX light rail only (over 98% of ridership). Paratransit and WES are excluded.
 
 ## How to reproduce
 
