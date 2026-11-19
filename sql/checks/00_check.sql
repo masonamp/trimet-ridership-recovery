@@ -1,3 +1,5 @@
+-- Check core: expect 93 rows and 93 distinct months per mode, 2019-01 to 2026-09 (Sep 2026 data).
+-- Catches duplicate or missing months.
 SELECT
     mode,
     COUNT(*) AS n_rows,
@@ -9,4 +11,4 @@ FROM
 GROUP BY
     mode
 ORDER BY
-    mode
+    mode;

@@ -1,5 +1,6 @@
--- This core view will be used for all subsequent analysis and include only bus and light rail.
--- Both MB and LR are the same TOS (DO), so there is only one row per mode per month.
+-- core: bus (MB) and MAX light rail (LR) only. Base for all later views.
+-- Grain: one row per mode per month, 186 rows. Both modes have a single type of service (DO).
+-- Depends on: monthly (loaded from data/processed/trimet_monthly.csv).
 CREATE
 OR REPLACE VIEW core AS
 SELECT

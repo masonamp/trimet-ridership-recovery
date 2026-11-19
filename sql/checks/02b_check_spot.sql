@@ -1,11 +1,12 @@
--- Hand check a few values: edge cases and a pandemic month. 
+-- Spot check monthly_recovery against hand-computed values from the source file:
+-- 2019-09 (baseline, should be 1.0), 2020-04 (pandemic low), 2026-09 (latest month).
 SELECT
     mode,
     month,
     upt,
     vrh,
-    ROUND(upt_recovery, 3) AS upt_recovery,
-    ROUND(vrh_recovery, 3) AS vrh_recovery
+    ROUND(upt_recovery_monthly, 3) AS upt_recovery_monthly,
+    ROUND(vrh_recovery_monthly, 3) AS vrh_recovery_monthly
 FROM
     monthly_recovery
 WHERE
