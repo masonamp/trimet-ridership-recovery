@@ -4,7 +4,7 @@ How has TriMet ridership recovered since 2019, and how does recovery differ by m
 
 This analysis covers TriMet's fixed-route bus and MAX light rail, which together make up over 98% of its ridership.
 
-**Status:** In progress. Data acquired, validated, and cleaned; SQL analysis complete.
+**Status:** In progress. Data acquired, validated, and cleaned; SQL analysis, pandas validation, and charts complete.
 
 ## Questions
 
@@ -82,7 +82,9 @@ One row per mode and month (186 rows, January 2019 to September 2026), for bus a
 
 [`notebooks/02_clean_trimet.ipynb`](notebooks/02_clean_trimet.ipynb) checks the cleaned data: no duplicate keys, no negative values, UPT and VRH present together, and complete months for bus and MAX.
 
-[`notebooks/03_sql_analysis.ipynb`](notebooks/03_sql_analysis.ipynb) checks each query's output (row counts, nulls, 2019 recovery equal to 1.0, values hand-checked against the source file) and recomputes the rolling 12-month values independently in pandas.
+[`notebooks/03_sql_analysis.ipynb`](notebooks/03_sql_analysis.ipynb) checks each query's output (row counts, nulls, 2019 recovery equal to 1.0, values spot-checked against the source file) and recomputes the rolling 12-month values independently in pandas.
+
+[`notebooks/04_validate_recovery.ipynb`](notebooks/04_validate_recovery.ipynb) checks `recovery_monthly.csv` in pandas: structure, months, expected nulls, value ranges, 2019 baselines, derived columns, and a match to the cleaned data.
 
 ## Limitations
 
@@ -107,6 +109,7 @@ data/processed/   Cleaned TriMet data (trimet_monthly.csv) and analysis results 
 sql/              Analysis queries (DuckDB views, numbered in run order)
 sql/checks/       Check queries
 notebooks/        Validation, cleaning, SQL analysis, and charts
+figures/          Chart PNGs
 requirements.txt  Python dependencies
 ```
 
